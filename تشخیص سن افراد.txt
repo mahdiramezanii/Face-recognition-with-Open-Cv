@@ -1,0 +1,22 @@
+import cv2
+
+# Load the pre-trained model
+age_net = cv2.dnn.readNetFromCaffe("age.prototxt", "age.caffemodel")
+
+# Load the input image
+image = cv2.imread("image.jpg")
+
+# Create a blob from the input image
+blob = cv2.dnn.blobFromImage(image, 1.0, (227, 227), (78.4263377603, 87.7689143744, 114.895847746), swapRB=False)
+
+# Set the input blob for the neural network
+age_net.setInput(blob)
+
+# Forward pass through the neural network
+predictions = age_net.forward()
+
+# Get the age from the predictions
+age = round(predictions[0][0], 2)
+
+# Print the age
+print("Age:", age)
